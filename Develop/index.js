@@ -21,22 +21,22 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 // const { title } = require('process');
 
-const generateReadMe = ({ title, description, installation, usage, license,
-}) =>
+const generateReadMe = ({ title, description, installation, usage, license, contributions, tests, github, email}) =>
 `
 # ${title}
 
+## Description of Project
 * ${description}
 
 ## Table of Contents
 
-* Description
-* Installation
-* Usage
-* License
-* Contributing
-* Tests
-* Questions
+* [Description](##Description of Project)
+* [Installation]()
+* [Usage]()
+* [License]()
+* [Contributing]()
+* [Tests]()
+* [Questions](#question-link)
 
 ## Installation
 
@@ -46,9 +46,22 @@ const generateReadMe = ({ title, description, installation, usage, license,
 
 * ${usage}
 
-## Questions
+## License
 
-* ${license}
+* [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+* This application is protected under ${license} licensing.
+
+## Contributing
+
+* ${contributions}
+
+## Tests
+
+* ${tests}
+
+## Questions <a name="question-link"></a>
+
+* Please email ${email} with any questions or visit my GitHub page [${github}](https://github.com/Aidan-Windebank).
 `;
 
 inquirer
@@ -74,10 +87,11 @@ inquirer
             message: 'Any reccomendations for project usage?',
         },
         {
-            type: 'input',
+            type: 'list',
             name: 'license',
-            message: 'What type of license would you like?',
-        },
+            message: 'What type of licensing would you like?',
+            choices: ['MIT', 'Perl', 'Apache 2.0'],
+          },
         {
             type: 'input',
             name: 'contributions',
@@ -90,8 +104,13 @@ inquirer
         },
         {
             type: 'input',
-            name: 'questions',
-            message: 'Do you have any quesions about the project?',
+            name: 'github',
+            message: 'Please enter your GitHub username?',
+        },
+        {
+            type: 'email',
+            name: 'email',
+            message: 'Please enter an email for users to contact you with questions?',
         },
     ])
     .then((answers) => {
