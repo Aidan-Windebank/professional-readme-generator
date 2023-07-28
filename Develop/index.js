@@ -1,69 +1,51 @@
-// TODO: Include packages needed for this application
-
-// TODO: Create an array of questions for user input
-// const questions = [];
-
-// TODO: Create a function to write README file
-// function writeToFile(fileName, data) {}
-
-// TODO: Create a function to initialize app
-// function init() {}
-
-// Function call to initialize app
-// init();
-
-
-// Things in the readme
-
-
-
+// Packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
-// const { title } = require('process');
 
-const generateReadMe = ({ title, description, installation, usage, license, contributions, tests, github, email}) =>
+// Function to generate READMe with template literals
+const generateReadMe = (data) =>
 `
-# ${title}
+# ${data.title}  ${whichLicense(data.license)}
 
-## Description of Project
-* ${description}
+## Description
+* ${data.description}
 
 ## Table of Contents
 
-* [Description](##Description of Project)
-* [Installation]()
-* [Usage]()
-* [License]()
-* [Contributing]()
-* [Tests]()
-* [Questions](#question-link)
+- [Description](#description)
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+- [Contributing](#contributing)
+- [Tests](#tests)
+- [Questions](#questions)
 
 ## Installation
 
-* ${installation}
+* ${data.installation}
 
 ## Usage
 
-* ${usage}
+* ${data.usage}
 
 ## License
 
-* [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-* This application is protected under ${license} licensing.
+* This application is protected under ${data.license} licensing. ${whichLicense(data.license)}
 
 ## Contributing
 
-* ${contributions}
+* ${data.contributions}
 
 ## Tests
 
-* ${tests}
+* ${data.tests}
 
-## Questions <a name="question-link"></a>
+## Questions
 
-* Please email ${email} with any questions or visit my GitHub page [${github}](https://github.com/Aidan-Windebank).
+* Please email ${data.email} with any questions or visit the GitHub repository [${data.github}](https://github.com/Aidan-Windebank/professional-readme-generator).
 `;
 
+// Block of questions to ask user for input into the README using then block
 inquirer
     .prompt([
         {
@@ -117,6 +99,18 @@ inquirer
         const readmePageContent = generateReadMe(answers);
 
         fs.writeFile('README.md', readmePageContent, (err) =>
-            err ? console.log(err) : console.log('Successfully created readme.md!')
+            err ? console.log(err) : console.log('Successfully created README!')
+            
         );
     });
+
+// Function to set license badges to the license that is selected
+function whichLicense(license){
+    if(license === "MIT"){
+        return `[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)`
+    } else if (license === "Apache 2.0") {
+        return `[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)`
+    } else {
+        return `[![License: Artistic-2.0](https://img.shields.io/badge/License-Perl-0298c3.svg)](https://opensource.org/licenses/Artistic-2.0)`
+    }
+}
