@@ -45,7 +45,7 @@ const generateReadMe = (data) =>
 * Please email ${data.email} with any questions or visit the GitHub repository [${data.github}](https://github.com/Aidan-Windebank/professional-readme-generator).
 `;
 
-// Block of questions to ask user for input into the README using then block
+// Then block of questions to ask user for input into the README
 inquirer
     .prompt([
         {
